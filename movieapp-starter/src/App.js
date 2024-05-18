@@ -1,11 +1,12 @@
 import React from "react";
 import AppRouter from "./router/AppRouter";
-import { Routes, Route } from "react-router-dom";
-import Main from "../src/pages/Main"
+import "./index.css";
+import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
-    <div>
+    <div className=" dark:bg-gray-dark-main min-h-screen">
+      <Navbar/>
       <AppRouter/>
     </div>
   );
