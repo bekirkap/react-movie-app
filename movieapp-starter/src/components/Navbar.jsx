@@ -1,8 +1,17 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { Fragment, useState } from 'react'
+import { 
+  Disclosure,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition,
+ } from '@headlessui/react'
 import { Link } from 'react-router-dom'
 import UserIcon from "../assets/icons/avatar.png"
 import Switch from './Switch'
+import { useAuthContext } from '../context/AuthProvider'
+
 
 
 function classNames(...classes) {
@@ -11,9 +20,10 @@ function classNames(...classes) {
 
 export default function Navbar() {
 
-const currentUser = {displayName: "Bekir Kaplan"};
+  const { currentUser } = useAuthContext();
+// const currentUser = {displayName: "Bekir Kaplan"};
 
-
+const [focus, setFocus] = useState()
   return (
     <>
     <Disclosure as="nav" className=" bg-neutral-100 dark:bg-gray-900 py-3 dark:text-white fixed w-full top-0 z-20 text-black">
@@ -40,7 +50,7 @@ const currentUser = {displayName: "Bekir Kaplan"};
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <img
@@ -49,7 +59,7 @@ const currentUser = {displayName: "Bekir Kaplan"};
                         alt="user"
                         referrerPolicy='no-referrer'
                       />
-                    </Menu.Button>
+                    </MenuButton>
                   </div>
                   <Transition
                     as={Fragment}
@@ -60,38 +70,38 @@ const currentUser = {displayName: "Bekir Kaplan"};
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
+                    <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <MenuItem>
+                        {({ focus }) => (
                           <Link
-                            to="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            to="/register"
+                            className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Your Profile
+                            Register
                           </Link>
                         )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
+                      </MenuItem>
+                      <MenuItem>
+                        {({ focus }) => (
                           <Link
-                            to="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            to="/login"
+                            className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Settings
+                            Login
                           </Link>
                         )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
+                      </MenuItem>
+                      <MenuItem>
+                        {({ focus }) => (
                           <span
                             
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 cursor-pointer')}
+                            className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 cursor-pointer')}
                           >
                             Sign out
                           </span>
                         )}
-                      </Menu.Item>
-                    </Menu.Items>
+                      </MenuItem>
+                    </MenuItems>
                   </Transition>
                 </Menu>
               </div>
