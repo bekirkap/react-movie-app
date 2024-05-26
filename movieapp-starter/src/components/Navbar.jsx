@@ -20,7 +20,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
 
-  const { currentUser } = useAuthContext();
+  const { currentUser,logOut } = useAuthContext();
 // const currentUser = {displayName: "Bekir Kaplan"};
 
 const [focus, setFocus] = useState()
@@ -94,7 +94,7 @@ const [focus, setFocus] = useState()
                       <MenuItem>
                         {({ focus }) => (
                           <span
-                            
+                            onClick={()=> logOut()}
                             className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 cursor-pointer')}
                           >
                             Sign out

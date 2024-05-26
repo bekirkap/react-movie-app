@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState } from 'react'
 import { auth } from "../auth/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import {useNavigate} from "react-router-dom"
+import { toastErrorNotify, toastSuccessNotify } from '../helpers/ToastNotify';
 
 const AuthContext = createContext();
 
@@ -20,10 +21,10 @@ const createUser = async(email, password)=> {
   try{
   const userCredential = await createUserWithEmailAndPassword(auth, email, password)
   navigate("/")
-  console.log(userCredential);
+  toastSuccessNotify("Registered succesfully")
   }
   catch(error){
-    console.log(error);
+    toastErrorNotify(error.message)
   }
 }
 const signIn = async(email, password)=> { 
@@ -31,14 +32,25 @@ const signIn = async(email, password)=> {
   try{
   const userCredential = await signInWithEmailAndPassword(auth, email, password)
   navigate("/")
-  console.log(userCredential);
+  toastSuccessNotify("Singed in succesfully")
   }
   catch(error){
-    console.log(error);
+    toastErrorNotify(error.message)
   }
 }
+const logOut = () => {
+  signOut(auth)
+    .then(() => {
+      toastSuccessNotify("Logged out successfully");
+      navigate("/login")
+    })
+    .catch((error) => {
+      toastErrorNotify(error.message)
+    });
+};
 
-  const values = {currentUser, createUser,signIn};
+
+  const values = {currentUser, createUser,signIn, logOut};
   return (
     <AuthContext.Provider value={values}>
       {children}
