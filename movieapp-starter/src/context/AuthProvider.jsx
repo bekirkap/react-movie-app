@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { auth } from "../auth/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, GoogleAuthProvider, signInWithPopup,sendPasswordResetEmail } from "firebase/auth";
 import {useNavigate} from "react-router-dom"
-import { toastErrorNotify, toastSuccessNotify } from '../helpers/ToastNotify';
+import { toastErrorNotify, toastSuccessNotify, toastWarnNotify } from '../helpers/ToastNotify';
 
 const AuthContext = createContext();
 
@@ -79,13 +79,24 @@ const googleProvider = ()=>{
     toastErrorNotify(error.message)
   });
 }
+const forgotPassword = (email)=>{
+  sendPasswordResetEmail(auth, email)
+  .then(() => {
+ toastWarnNotify("Please check your mail")
+  })
+  .catch((error) => {
+  toastErrorNotify(error.message)
+  })
+
+}
 
 
   const values = {currentUser, 
     createUser,
     signIn, 
     logOut,
-    googleProvider
+    googleProvider,
+    forgotPassword
   };
   return (
     <AuthContext.Provider value={values}>

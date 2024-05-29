@@ -9,7 +9,7 @@ const Login = () => {
     const handleChange = (e) =>setInfo({...info, [e.target.name]: e.target.value})
     const {email , password} = info
 
-    const {signIn, googleProvider } = useAuthContext()
+    const {signIn, googleProvider, forgotPassword } = useAuthContext()
     const handleSubmit = (e) =>{
 
       e.preventDefault();
@@ -48,7 +48,8 @@ const Login = () => {
               <label htmlFor="floating_password">Password</label>
             </div>
             <div className="flex justify-between">
-            <span className=" py-3 font-[0.75em] cursor-pointer decoration-none text-gray-500 hover:text-[#ff4b45]">Forgot Password</span>
+            <span className=" py-3 font-[0.75em] cursor-pointer decoration-none text-gray-500 hover:text-[#ff4b45]"
+            onClick={()=>forgotPassword(email)}>Forgot Password</span>
             <span className=" py-3 font-[0.75em] cursor-pointer decoration-none text-gray-500 hover:text-[#ff4b45]">Sign Up</span>
             </div>
             <button className="btn-danger" type="submit">
