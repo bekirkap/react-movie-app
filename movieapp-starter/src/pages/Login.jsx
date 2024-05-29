@@ -9,7 +9,7 @@ const Login = () => {
     const handleChange = (e) =>setInfo({...info, [e.target.name]: e.target.value})
     const {email , password} = info
 
-    const {signIn } = useAuthContext()
+    const {signIn, googleProvider } = useAuthContext()
     const handleSubmit = (e) =>{
 
       e.preventDefault();
@@ -57,6 +57,7 @@ const Login = () => {
             <button
               className="flex justify-between text-center items-center btn-danger"
               type="button"
+              onClick={()=> googleProvider()}
             >
               Continue with Google
               <GoogleIcon color="currentColor" />
