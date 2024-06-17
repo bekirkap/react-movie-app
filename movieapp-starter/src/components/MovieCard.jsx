@@ -1,16 +1,34 @@
 import React from 'react'
+import { useAuthContext } from '../context/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const IMG_API = "https://image.tmdb.org/t/p/w1280";
 const defaultImage ="https://images.unsplash.com/photo-1581905764498-f1b60bae941a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80";
 
 
 
+
 const MovieCard = ({title, poster_path, overview, vote_average,id}) => {
+    const {currenUser} = useAuthContext()
+
+    
+const getVoteClass = (vote)=>{
+    if (vote >=8){
+        return "green"
+    }else if(vote>=6){
+        return "orange"
+    }else{
+        return "red"
+    }
+}
+const navigate = useNavigate()
   return (
+  
     <div
     className="movie"
     id="container"
     alt="movie-card"
+    onClick={()=> navigate("/details/"+id)}
     >
     <img
         loading="lazy"
@@ -19,7 +37,7 @@ const MovieCard = ({title, poster_path, overview, vote_average,id}) => {
       />
     <div className="flex align-baseline justify-between p-1 text-white">
       <h5>{title}</h5>
-        <span>{vote_average.toFixed(1)}</span>
+        <span className={`tag ${getVoteClass(vote_average)}`}>{vote_average.toFixed(1)}</span>
     </div>
     <div className="movie-over">
       <h2>Overview</h2>
