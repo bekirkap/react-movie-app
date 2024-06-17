@@ -20,7 +20,6 @@ const AuthProvider = ({children}) => {
 
 
   const createUser = async(email, password, displayName)=> { 
-  
   try{
   const userCredential = await createUserWithEmailAndPassword(auth, email, password)
   await  updateProfile(auth.currentUser, {
@@ -33,8 +32,10 @@ const AuthProvider = ({children}) => {
     toastErrorNotify(error.message)
   }
   }
+
+
+
   const signIn = async(email, password)=> { 
-  
   try{
   const userCredential = await signInWithEmailAndPassword(auth, email, password)
   navigate("/")
@@ -44,6 +45,9 @@ const AuthProvider = ({children}) => {
     toastErrorNotify(error.message)
   }
 }
+
+
+
 const logOut = () => {
   signOut(auth)
     .then(() => {
@@ -61,13 +65,13 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
       const {email,displayName,photoURL} = user
       setCurrentUser({email,displayName,photoURL})
-
-
   } else {
     setCurrentUser(false)
   }
 });
 }
+
+
 
 const googleProvider = ()=>{
   const provider = new GoogleAuthProvider();
@@ -79,6 +83,9 @@ const googleProvider = ()=>{
     toastErrorNotify(error.message)
   });
 }
+
+
+
 const forgotPassword = (email)=>{
   sendPasswordResetEmail(auth, email)
   .then(() => {
@@ -87,8 +94,8 @@ const forgotPassword = (email)=>{
   .catch((error) => {
   toastErrorNotify(error.message)
   })
-
 }
+
 
 
   const values = {currentUser, 
@@ -98,6 +105,10 @@ const forgotPassword = (email)=>{
     googleProvider,
     forgotPassword
   };
+
+
+
+  
   return (
     <AuthContext.Provider value={values}>
       {children}
